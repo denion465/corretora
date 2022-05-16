@@ -7,9 +7,7 @@
     "username": "postgres",
     "password": "postgres",
     "database": "corretora",
-    "synchronize": true,
-    "logging": true,
-    "entities": ["./src/corretora/entities/*.ts"],
+    "entities": ["./src/corretora/model/*.ts"],
     "migrations": ["./src/typeorm/migrations/*.ts"],
     "cli": {
       "migrationsDir": "./src/typeorm/migrations"
