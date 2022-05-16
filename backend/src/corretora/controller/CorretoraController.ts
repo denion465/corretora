@@ -1,16 +1,15 @@
 import { Request, Response } from 'express';
 
-import { CorretoraService } from '../service/CorretoraService';
-
+import { CurrentQuoteService } from '../service/CurrentQuoteService';
 export class CorretoraController {
   async getCurrentQuote(req: Request, res: Response): Promise<Response> {
     const { symbol } = req.params;
 
-    const corretoraService = new CorretoraService();
+    const currentQuoteService = new CurrentQuoteService();
 
-    const quote = await corretoraService.getCurrentQuote(symbol);
+    const response = await currentQuoteService.getCurrentQuote(symbol);
 
-    return res.json(quote);
+    return res.json(response);
   }
 }
 
