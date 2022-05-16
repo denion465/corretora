@@ -30,12 +30,12 @@ export class CurrentQuoteService {
     });
   }
 
-  async getCurrentQuote(symbol: string): Promise<IResponseRecentQuote | void> {
+  async getCurrentQuoteAndUpdate(symbol: string): Promise<IResponseRecentQuote> {
 
-    const symbolCapitalized = symbol.toUpperCase();
+    symbol = symbol.toUpperCase();
 
     const quoteSaved = await this.corretoraRepository.getCurrentQuote(
-      symbolCapitalized
+      symbol
     );
 
     if (quoteSaved) {
@@ -47,7 +47,7 @@ export class CurrentQuoteService {
         new Date(today.toLocaleDateString()) > new Date(quoteSaved.updated_at)
       ) {
 
-        const data = await fetchDataApi(symbolCapitalized);
+        const data = await fetchDataApi(symbol);
 
         const response = await this.saveQuote({
           id: quoteSaved.id,
@@ -58,7 +58,7 @@ export class CurrentQuoteService {
         const reponsePricedAt = response.data['Meta Data']['3. Last Refreshed'];
 
         return {
-          name: symbolCapitalized,
+          name: symbol,
           lastPrice: Number(
             response.data['Time Series (Daily)'][reponsePricedAt]['4. close']
           ),
@@ -67,7 +67,7 @@ export class CurrentQuoteService {
       }
 
       return {
-        name: symbolCapitalized,
+        name: symbol,
         lastPrice: Number(
           quoteSaved.data['Time Series (Daily)'][quoteSavedPricedAt]['4. close']
         ),
@@ -75,16 +75,16 @@ export class CurrentQuoteService {
       };
     }
 
-    const data = await fetchDataApi(symbolCapitalized);
+    const data = await fetchDataApi(symbol);
     const pricedAt = data['Meta Data']['3. Last Refreshed'];
 
     await this.saveQuote({
-      symbol: symbolCapitalized,
+      symbol,
       data
     });
 
     return {
-      name: symbolCapitalized,
+      name: symbol,
       lastPrice: Number(
         data['Time Series (Daily)'][pricedAt]['4. close']
       ),
