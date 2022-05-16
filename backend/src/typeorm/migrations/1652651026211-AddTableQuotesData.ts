@@ -9,7 +9,7 @@ export class AddTableQuotesData1652651026211 implements MigrationInterface {
           id SERIAL NOT NULL PRIMARY KEY,
           symbol VARCHAR(20) NOT NULL,
           data JSONB NOT NULL,
-          updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+          updated_at DATE DEFAULT NOW()
         )
       `
     );
