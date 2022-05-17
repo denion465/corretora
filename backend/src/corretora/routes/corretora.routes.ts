@@ -15,3 +15,8 @@ corretoraRouter.get(
   '/:symbol/history',
   corretoraController.getQuotePricesBetweenDates
 );
+
+corretoraRouter.post(
+  '/:symbol/compare',
+  corretoraController.compareStocks
+);

@@ -28,5 +28,19 @@ export class CorretoraController {
 
     return res.json(response);
   }
+
+  async compareStocks(req: Request, res: Response): Promise<Response> {
+    const { symbol } = req.params;
+    const { stocks } = req.body;
+
+    const corretoraService = new CorretoraService();
+
+    const response = await corretoraService.compareStocks({
+      symbol,
+      stocks
+    });
+
+    return res.json(response);
+  }
 }
 

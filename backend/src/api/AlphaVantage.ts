@@ -18,5 +18,12 @@ export const fetchApiAlphaVantage = async (symbol: string): Promise<any> => {
     );
   }
 
+  if (data['Note']) {
+    throw new AppError(
+      'Limite de requisições excedido para API da Alpha Vantage, aguarde 1 minuto e tente novamente',
+      429
+    );
+  }
+
   return data;
 };
