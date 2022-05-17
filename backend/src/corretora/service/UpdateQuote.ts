@@ -30,7 +30,7 @@ export class UpdateQuote {
     });
   }
 
-  async getUpdatedQuote(symbol: string): Promise<any> {
+  async getUpdatedQuote(symbol: string): Promise<QuoteData | any> {
 
     const quoteSaved = await this.corretoraRepository
       .getCurrentQuote(symbol);

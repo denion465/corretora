@@ -10,3 +10,8 @@ corretoraRouter.get(
   '/:symbol/quote',
   corretoraController.getCurrentQuote
 );
+
+corretoraRouter.get(
+  '/:symbol/history',
+  corretoraController.getQuotePricesBetweenDates
+);

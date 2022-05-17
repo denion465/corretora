@@ -1,13 +1,30 @@
 import { Request, Response } from 'express';
+import { CorretoraService } from '../service/CorretoraService';
 
-import { CurrentQuoteService } from '../service/CurrentQuoteService';
 export class CorretoraController {
+
   async getCurrentQuote(req: Request, res: Response): Promise<Response> {
     const { symbol } = req.params;
 
-    const currentQuoteService = new CurrentQuoteService();
+    const corretoraService = new CorretoraService();
 
-    const response = await currentQuoteService.getCurrentQuote(symbol);
+    const response = await corretoraService.getCurrentQuote(symbol);
+
+    return res.json(response);
+  }
+
+  async getQuotePricesBetweenDates(
+    req: Request,
+    res: Response
+  ): Promise<Response> {
+
+    const { symbol } = req.params;
+    const { to, from } = req.query;
+
+    const corretoraService = new CorretoraService();
+
+    const response = await corretoraService
+      .getQuotePricesBetweenDates({ symbol, to, from });
 
     return res.json(response);
   }

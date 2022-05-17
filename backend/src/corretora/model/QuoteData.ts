@@ -16,7 +16,7 @@ export class QuoteData {
   symbol: string;
 
   @Column('jsonb', { nullable: false })
-  data: any;
+  data: object;
 
   @UpdateDateColumn()
   updated_at: Date;

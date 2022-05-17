@@ -10,9 +10,7 @@ export class CorretoraRepository implements ICorretoraRepository {
     this.ormRepository = getRepository(QuoteData);
   }
 
-  async getCurrentQuote(
-    symbol: string
-  ): Promise<QuoteData | undefined> {
+  async getCurrentQuote(symbol: string): Promise<QuoteData | undefined> {
 
     const quote = await this.ormRepository.findOne(
       { where: { symbol } }
