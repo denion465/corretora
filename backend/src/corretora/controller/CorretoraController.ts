@@ -7,7 +7,7 @@ export class CorretoraController {
 
     const currentQuoteService = new CurrentQuoteService();
 
-    const response = await currentQuoteService.getCurrentQuoteAndUpdate(symbol);
+    const response = await currentQuoteService.getCurrentQuote(symbol);
 
     return res.json(response);
   }

@@ -6,7 +6,7 @@ const api = axios.create({
   baseURL: 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='
 });
 
-export const fetchDataApi = async (symbol: string): Promise<any> => {
+export const fetchApiAlphaVantage = async (symbol: string): Promise<any> => {
   const { data }  = await api.get(
     `${symbol}&outputsize=full&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`
   );
