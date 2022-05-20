@@ -15,6 +15,15 @@ interface IResponseComparedQuotes {
   lastPrices: ILastPricesList[];
 }
 
+interface IResponseEarningsProjection {
+  name: string;
+  purchasedAmount: number;
+  purchasedAt: string;
+  priceAtDate: number;
+  lastPrice: number;
+  capitalGains: number;
+}
+
 interface IPricesList {
   opening: number;
   low: number;
@@ -38,6 +47,10 @@ interface ILastPricesList {
   lastPrice: number;
   pricedAt: string;
 }[];
+
+interface IEarningsProjectionRequest {
+  [key: string]: any;
+}
 
 export class CorretoraService {
 
@@ -127,6 +140,37 @@ export class CorretoraService {
 
     return {
       lastPrices
+    };
+  }
+
+  async earningsProjection(
+    symbol: string ,
+    {
+      purchasedAmount,
+      purchasedAt
+    }: IEarningsProjectionRequest): Promise<IResponseEarningsProjection> {
+    symbol = symbol.toUpperCase();
+
+    const quoteUpdated = await this.updateQuote.getUpdatedQuote(symbol);
+
+    const pricedAt = quoteUpdated['Meta Data']['3. Last Refreshed'];
+    const lastPrice = Number(
+      quoteUpdated['Time Series (Daily)'][pricedAt]['4. close']
+    );
+    const priceOnPurchaseDate = Number(
+      quoteUpdated['Time Series (Daily)'][purchasedAt]['4. close']
+    );
+
+    const percentage = (lastPrice / priceOnPurchaseDate - 1) * 100;
+    const capitalGains = percentage / 100 * Number(purchasedAmount);
+
+    return {
+      name: symbol,
+      purchasedAmount: Number(purchasedAmount),
+      purchasedAt,
+      priceAtDate: priceOnPurchaseDate,
+      lastPrice,
+      capitalGains: Number(capitalGains.toFixed(2))
     };
   }
 }

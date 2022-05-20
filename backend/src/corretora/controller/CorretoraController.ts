@@ -42,5 +42,20 @@ export class CorretoraController {
 
     return res.json(response);
   }
+
+  async earningsProjection(req: Request, res: Response): Promise<Response> {
+    const { symbol } = req.params;
+    const { purchasedAmount, purchasedAt } = req.query;
+
+    const corretoraService = new CorretoraService();
+
+    const response = await corretoraService.earningsProjection(
+      symbol,
+      { purchasedAmount, purchasedAt }
+    );
+
+    return res.json(response);
+
+  }
 }
 

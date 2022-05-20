@@ -20,3 +20,8 @@ corretoraRouter.post(
   '/:symbol/compare',
   corretoraController.compareStocks
 );
+
+corretoraRouter.get(
+  '/:symbol/gains',
+  corretoraController.earningsProjection
+);
