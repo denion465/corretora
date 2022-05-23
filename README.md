@@ -68,11 +68,11 @@ Um banco [PostgreSQL](https://www.postgresql.org) rodando na porta padrão.
 
 ##### Response BODY:
 ```json
-  {
-    "name": "ETHBTC",
-    "lastPrice": 0.0674,
-    "pricedAt": "2022-05-22"
-  }
+{
+  "name": "ETHBTC",
+  "lastPrice": 0.0674,
+  "pricedAt": "2022-05-22"
+}
 ```
 
 #### Retorna um histórico de cotações entre duas datas:
@@ -91,23 +91,23 @@ to: 2022-04-16
 ##### Response BODY:
 ```json
 {
-	"name": "IBM",
-	"prices": [
-		{
-			"opening": 128.93,
-			"high": 130.58,
-			"low": 126.38,
-			"closing": 126.56,
-			"pricedAt": "2022-04-14"
-		},
-		{
-			"opening": 125.64,
-			"high": 126.67,
-			"low": 124.91,
-			"closing": 126.14,
-			"pricedAt": "2022-04-13"
-		}
-	]
+  "name": "IBM",
+  "prices": [
+    {
+      "opening": 128.93,
+      "high": 130.58,
+      "low": 126.38,
+      "closing": 126.56,
+      "pricedAt": "2022-04-14"
+    },
+    {
+      "opening": 125.64,
+      "high": 126.67,
+      "low": 124.91,
+      "closing": 126.14,
+      "pricedAt": "2022-04-13"
+    }
+  ]
 }
 ```
 
@@ -166,12 +166,12 @@ purchasedAt: 2018-01-24
 ##### Response BODY:
 ```json
 {
-	"name": "BBAS3.SA",
-	"purchasedAmount": 1000,
-	"purchasedAt": "2018-01-24",
-	"priceAtDate": 37.99,
-	"lastPrice": 37,
-	"capitalGains": -26.06
+  "name": "BBAS3.SA",
+  "purchasedAmount": 1000,
+  "purchasedAt": "2018-01-24",
+  "priceAtDate": 37.99,
+  "lastPrice": 37,
+  "capitalGains": -26.06
 }
 ```
 
