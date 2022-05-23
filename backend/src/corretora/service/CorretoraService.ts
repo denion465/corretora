@@ -1,4 +1,7 @@
+import { isValid } from 'date-fns';
+
 import { UpdateQuote } from './UpdateQuote';
+import AppError from '../../errors/AppError';
 
 interface IResponseRecentQuote {
   name: string;
@@ -74,8 +77,8 @@ export class CorretoraService {
 
   async getQuotePricesBetweenDates({
     symbol,
-    to,
-    from
+    from,
+    to
   }: IDateRangeRequest): Promise<IResponseBetweenDates> {
 
     symbol = symbol.toUpperCase();
@@ -86,10 +89,18 @@ export class CorretoraService {
     const startDate = new Date(from as string);
     const endDate = new Date(to as string);
 
+    if (!isValid(startDate) || !isValid(endDate)) {
+      throw new AppError('Formato de data inválido!', 400);
+    }
+
+    if (startDate > endDate) {
+      throw new AppError('A data inicial não pode ser maior que a data final!', 400);
+    }
+
     Object.entries(quoteUpdated['Time Series (Daily)'])
       .forEach(([key, value]: [string, any]) => {
         const keyDate = new Date(key);
-        if (keyDate <= startDate && keyDate >= endDate) {
+        if (keyDate >= startDate && keyDate <= endDate) {
           prices.push({
             opening: Number(value['1. open']),
             high: Number(value['2. high']),
@@ -154,9 +165,18 @@ export class CorretoraService {
     const quoteUpdated = await this.updateQuote.getUpdatedQuote(symbol);
 
     const pricedAt = quoteUpdated['Meta Data']['3. Last Refreshed'];
+
     const lastPrice = Number(
       quoteUpdated['Time Series (Daily)'][pricedAt]['4. close']
     );
+
+    if (!(quoteUpdated['Time Series (Daily)'][purchasedAt])) {
+      throw new AppError(
+        `Ação não encontrada para o dia de ${purchasedAt}!`,
+        404
+      );
+    }
+
     const priceOnPurchaseDate = Number(
       quoteUpdated['Time Series (Daily)'][purchasedAt]['4. close']
     );

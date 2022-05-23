@@ -19,7 +19,7 @@ export class CorretoraController {
   ): Promise<Response> {
 
     const { symbol } = req.params;
-    const { to, from } = req.query;
+    const { from, to } = req.query;
 
     const corretoraService = new CorretoraService();
 
