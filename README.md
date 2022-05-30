@@ -37,14 +37,11 @@ Typeorm, Date-fns, Axios, eslint.
 
 [Node.js](https://nodejs.org) com versão acima da 14.x.
 
-Um banco [PostgreSQL](https://www.postgresql.org) rodando na porta padrão.
+Um banco [PostgreSQL](https://www.postgresql.org) com nome de corretora rodando na porta padrão.
 
 ## Como rodar a API:
 * Clone este repositório.
 * Vá para pasta principal.
-* para funcionamento desta aplicação, favor clicar [neste link](https://www.alphavantage.co/support/#api-key) para solicitar uma key para fazer as consultas.
-* Adicionar a KEY que você gerou no arquivo .env(Foi criado um arquivo de exemplo).
-
 
 * Usando Yarn:
   * Download das depêndencias usando o Yarn: ```$ yarn```
