@@ -1,6 +1,8 @@
+import 'reflect-metadata';
+import { inject, injectable } from 'tsyringe';
+
 import { fetchApiAlphaVantage } from '../../api/AlphaVantage';
 import { QuoteData } from '../model/QuoteData';
-import { CorretoraRepository } from '../repository/CorretoraRepository';
 import { ICorretoraRepository } from '../repository/ICorretoraRepository';
 
 interface ISaveQuoteRequest {
@@ -9,13 +11,13 @@ interface ISaveQuoteRequest {
   data: object;
 }
 
+@injectable()
 export class UpdateQuote {
 
-  private corretoraRepository: ICorretoraRepository;
-
-  constructor() {
-    this.corretoraRepository = new CorretoraRepository();
-  }
+  constructor(
+    @inject('CorretoraRepository')
+    private corretoraRepository: ICorretoraRepository
+  ) {}
 
   async saveQuote({
     id,
@@ -23,7 +25,7 @@ export class UpdateQuote {
     data
   }: ISaveQuoteRequest): Promise<QuoteData> {
 
-    return await this.corretoraRepository.save({
+    return this.corretoraRepository.save({
       id,
       symbol,
       data
@@ -36,19 +38,20 @@ export class UpdateQuote {
       .getCurrentQuote(symbol);
 
     if (quoteSaved) {
+
       const today = new Date().toLocaleDateString();
 
       if (new Date(today) > new Date(quoteSaved.updated_at)) {
 
-        const data = await fetchApiAlphaVantage(symbol);
+        const response = await fetchApiAlphaVantage(symbol);
 
         await this.saveQuote({
           id: quoteSaved.id,
           symbol,
-          data
+          data: response
         });
 
-        return data;
+        return response;
       }
 
       return quoteSaved.data;

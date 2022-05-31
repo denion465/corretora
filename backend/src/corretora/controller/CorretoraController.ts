@@ -1,3 +1,5 @@
+import { container } from 'tsyringe';
+
 import { Request, Response } from 'express';
 import { CorretoraService } from '../service/CorretoraService';
 
@@ -6,7 +8,7 @@ export class CorretoraController {
   async getCurrentQuote(req: Request, res: Response): Promise<Response> {
     const { symbol } = req.params;
 
-    const corretoraService = new CorretoraService();
+    const corretoraService = container.resolve(CorretoraService);
 
     const response = await corretoraService.getCurrentQuote(symbol);
 
@@ -21,7 +23,7 @@ export class CorretoraController {
     const { symbol } = req.params;
     const { from, to } = req.query;
 
-    const corretoraService = new CorretoraService();
+    const corretoraService = container.resolve(CorretoraService);
 
     const response = await corretoraService
       .getQuotePricesBetweenDates({ symbol, to, from });
@@ -33,7 +35,7 @@ export class CorretoraController {
     const { symbol } = req.params;
     const { stocks } = req.body;
 
-    const corretoraService = new CorretoraService();
+    const corretoraService = container.resolve(CorretoraService);
 
     const response = await corretoraService.compareStocks({
       symbol,
@@ -47,7 +49,7 @@ export class CorretoraController {
     const { symbol } = req.params;
     const { purchasedAmount, purchasedAt } = req.query;
 
-    const corretoraService = new CorretoraService();
+    const corretoraService = container.resolve(CorretoraService);
 
     const response = await corretoraService.earningsProjection(
       symbol,

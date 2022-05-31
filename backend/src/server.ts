@@ -7,13 +7,14 @@ import { routes } from './routes';
 import AppError from './errors/AppError';
 
 import '../src/typeorm';
+import './provider';
 
 const app = express();
 
 app.use(express.json());
 app.use(routes);
 
-app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
+app.use((err: Error, _req: Request, res: Response, _: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       status: 'error',

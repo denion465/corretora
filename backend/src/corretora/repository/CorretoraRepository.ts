@@ -12,11 +12,9 @@ export class CorretoraRepository implements ICorretoraRepository {
 
   async getCurrentQuote(symbol: string): Promise<QuoteData | undefined> {
 
-    const quote = await this.ormRepository.findOne(
+    return this.ormRepository.findOne(
       { where: { symbol } }
     );
-
-    return quote;
   }
 
   async save(quoteData: ICreateQuoteDTO): Promise<QuoteData> {
@@ -26,8 +24,6 @@ export class CorretoraRepository implements ICorretoraRepository {
       updated_at: new Date()
     });
 
-    const savedQuote = await this.ormRepository.save(quote);
-
-    return savedQuote;
+    return this.ormRepository.save(quote);
   }
 }

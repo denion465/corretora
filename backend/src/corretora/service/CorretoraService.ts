@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+import { inject, injectable } from 'tsyringe';
 import { isValid } from 'date-fns';
 
 import { UpdateQuote } from './UpdateQuote';
@@ -55,9 +57,14 @@ interface IEarningsProjectionRequest {
   [key: string]: any;
 }
 
+
+@injectable()
 export class CorretoraService {
 
-  private updateQuote = new UpdateQuote();
+  constructor(
+    @inject('UpdateQuote')
+    private updateQuote: UpdateQuote
+  ) {}
 
   async getCurrentQuote(symbol: string): Promise<IResponseRecentQuote> {
 
