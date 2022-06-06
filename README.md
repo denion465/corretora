@@ -31,7 +31,7 @@ Dados das ações sendo consultadas na [Alpha Vantage](https://www.alphavantage.
 
 ## 📘 Libs:
 
-Typeorm, Date-fns, Axios, eslint.
+Typeorm, Date-fns, Axios, ESlint, Jest.
 
 ## Requisitos:
 
@@ -52,6 +52,16 @@ Um banco [PostgreSQL](https://www.postgresql.org) com nome de corretora rodando 
   * Iniciando a API com NPM: ```$ npm run dev```
 
 * Porta da API: 3333
+
+## Como rodar os testes:
+
+* Rodando os testes usando o Yarn: ```$ yarn test```
+* Rodandos os testes usando o NPM: ```$ npm run test```
+
+✅ Testes dos serviços 100% Coverage.
+
+![Alt Text](./testes.gif)
+
 
 ## Exemplos de uso (ENDPOINTS):
 > Favor adicionar .SA no final de alguns símbolos de ações como VALE5.SA, PETR4.SA, GOLL4.SA, CASH3.SA, etc...
